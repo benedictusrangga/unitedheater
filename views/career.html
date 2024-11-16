@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <head>
+        <title>United Heater</title>
+       
+        <link rel="stylesheet" href="/css/style.css" />
+        <link rel="stylesheet" href="/css/responsive.css" />
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/bootstrap.bundle.min.js"></script>
+        <script src="/js/swiper-bundle.min.js"></script>
+        <script src="/js/custom.js"></script>
+        <script src="/js/script.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Poppins:ital,wght@0,200;0,400;0,500;0,600;0,700;1,700&family=Ubuntu:wght@300;400;500;700&display=swap"
+          rel="stylesheet"/>
+        <link
+          rel="shortcut icon"
+          type="image/png"
+          href="https://unitedheater.co.id/sites/default/files/new_logo.png"
+        />
+        <link rel="stylesheet" href="/css/swiper-bundle.min.css" />
+        <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+        <link rel="icon" href="https://unitedheater.co.id/sites/default/files/new_logo.png" type="image/x-icon">
+
+</head>
+
+<body>
+  
+
+    <div id="navbar-container"></div>
+       
+    <div class="tp-banner">
+        <img src="/images\certificate\image.png" alt="Banner" />
+        <div class="tp-page-width">
+            <div class="tp-ban-content">
+              
+            </div>
+        </div>
+    </div>
+
+
+    <section class="webdev-highlight">
+        <h2 class="highlight-title">Profil Perusahaan</h2>
+        <div class="developer-profile">
+            <img src="/images\client\image.png" alt="Web Developer" class="developer-img"/>
+            <div class="developer-info">
+                <h3>United Heater</h3>
+                <p>United Heater adalah nama merek produk yang berfokus pada alat pemanas. United Heater diproduksi oleh PT Usaha Saudara Mandiri yang berlokasi di Tangerang, Banten, Indonesia.</p>
+            
+            </div>
+        </div>
+    </section>
+     <!-- WhatsApp Floating Icon -->
+<a href=https://api.whatsapp.com/send?phone=628176565099&text=" class="whatsapp_float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  
+  
+  <a href="https://www.instagram.com/unitedheater/" class="instagram_float" target="_blank">
+    <i class="fab fa-instagram"></i>
+  </a>
+
+    <!-- Job Listings -->
+    <section class="job-listings">
+        <h2 class="job-listings-title">Pekerjaan Yang Tersedia:</h2>
+        <div id="jobContainer"></div>
+    </section>
+
+    <script>
+    async function fetchJobs() {
+    try {
+      
+        const response = await fetch('http://localhost:3000/jobs');
+        const jobs = await response.json(); // Parse the response as JSON
+        const jobContainer = document.getElementById('jobContainer');
+        jobContainer.innerHTML = ''; // Clear the container before adding new data
+
+        // Iterate over the fetched jobs and create job cards
+        jobs.forEach(job => {
+            const jobCard = document.createElement('div');
+            jobCard.className = 'job-card';
+            jobCard.innerHTML = `
+                <h3>${job.title}</h3>
+                <p>Lokasi: ${job.location}</p>
+                <button class="open-modal-btn" data-job-id="${job.id}">Pelajari Selengkapnya</button>
+            `;
+            jobContainer.appendChild(jobCard);
+        });
+
+        // Attach event listeners to all modal buttons
+        document.querySelectorAll('.open-modal-btn').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const jobId = event.target.getAttribute('data-job-id');
+                openModal(jobId);
+            });
+        });
+
+    } catch (error) {
+        console.error('Error fetching jobs:', error);
+    }
+}
+
+async function openModal(id) {
+    try {
+        // Fetch specific job details from the backend using the job ID
+        const response = await fetch(`http://localhost:3000/jobs/${id}`);
+        const job = await response.json();
+
+        const modal = document.createElement('div');
+        modal.id = `modal${id}`;
+        modal.className = 'modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close" onclick="closeModal(${id})">&times;</span>
+                <h2>Job Details: ${job.title}</h2>
+                <p><strong>Location:</strong> ${job.location}</p>
+                <p><strong>Description:</strong><br> ${job.description}</p>
+                <p><strong>Responsibilities:</strong><br> 
+                    ${job.responsibilities.split('\n').map(item => `<li>${item}</li>`).join('')}
+                </p>
+                <p><strong>Requirements:</strong><br> 
+                    ${job.requirements.split('\n').map(item => `<li>${item}</li>`).join('')}
+                </p>
+                <button onclick="applyJob(${id})">Lamar Sekarang</button>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        modal.style.display = "block"; // Make the modal visible
+    } catch (error) {
+        console.error('Error fetching job details:', error);
+    }
+}
+
+function closeModal(id) {
+    const modal = document.getElementById(`modal${id}`);
+    modal.style.display = "none";
+    document.body.removeChild(modal); // Clean up the modal from the DOM
+}
+
+// Close modals if clicked outside the modal content
+window.onclick = function(event) {
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(function(modal) {
+        if (event.target === modal) {
+            closeModal(modal.id.replace('modal', ''));
+        }
+    });
+};
+
+window.onload = fetchJobs;
+
+        </script>
+        
+<div id="footer-container"></div>
+
+
+    <style>
+       
+  .tp-banner img {
+      width: 100%;
+      height: 100vh;
+  }
+
+  .banner-text {
+      position: absolute; 
+      top: 30%;
+      left: 25%;
+      transform: translate(-50%, -50%);
+      font-size: 2rem;
+      font-weight: 600;
+      text-align: center;
+      white-space: normal;
+      color: #fff;
+      padding: 20px 40px;
+      background: rgba(0, 0, 0, 0.6);
+
+      backdrop-filter: blur(10px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  }
+
+
+ 
+
+
+
+
+  .job-listings {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      padding: 2rem;
+  }
+
+  
+  .job-card {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      width: 300px;
+      margin: 1rem;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+  }
+  #jobContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Agar job cards tersebar dengan jarak yang sama */
+    gap: 20px; /* Menambah jarak antar job cards */
+}
+
+
+  .job-card:hover {
+      transform: translateY(-10px);
+  }
+
+  button {
+      background-color: #ce181e;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-top: 1rem;
+  }
+
+  button:hover {
+      background-color: black;
+  }
+
+  /* Modal Styles */
+  .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      overflow: auto;
+      padding-top: 60px;
+  }
+
+  .modal-content {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 600px;
+      border-radius: 10px;
+  }
+
+  .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+  }
+
+  .webdev-highlight {
+      background-color: #e9ecef;
+      padding: 2rem;
+      text-align: center;
+  }
+
+  .highlight-title {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+  }
+
+  .developer-profile {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1rem;
+  }
+
+  .developer-img {
+      border-radius: 50%;
+      margin-right: 20px;
+      width: 150px;
+      height: 150px;
+  }
+
+  .developer-info {
+      max-width: 600px;
+      text-align: left;
+  }
+
+  .developer-info h3 {
+      margin-bottom: 0.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .banner-text {
+        font-size: 1.8rem;
+        padding: 10px 20px;
+
+    }
+  }
+
+@media (max-width: 480px) {
+    .job-card {width: 194px;}
+
+
+.developer-info p{
+  font-size: 10px;
+}
+
+    .banner-text {
+        top: -89px;
+        font-size: 0.8rem;
+        padding: 10px 20px;
+    }
+}
+    </style>
+</body>
+</html>

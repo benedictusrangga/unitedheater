@@ -1,0 +1,92 @@
+
+<div class="tp-banner">
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper" id="banner-container">
+            <!-- Banner items will be inserted here dynamically -->
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+<script>
+// Fetch banner data from the server
+fetch('http://localhost:3000/banners')
+    .then(response => response.json())
+    .then(banners => {
+        const container = document.getElementById('banner-container');
+        
+        // Loop through the banners and create HTML elements
+        banners.forEach(banner => {
+            const slide = document.createElement('div');
+            slide.classList.add('swiper-slide');
+            
+            const img = document.createElement('img');
+            img.src = banner.image;
+            img.alt = banner.title;
+            
+            const caption = document.createElement('div');
+            caption.classList.add('caption');
+            
+            const title = document.createElement('h2');
+            title.textContent = banner.title;
+            
+            const description = document.createElement('p');
+            description.textContent = banner.description;
+            
+            caption.appendChild(title);
+            caption.appendChild(description);
+            slide.appendChild(img);
+            slide.appendChild(caption);
+            
+            container.appendChild(slide);
+        });
+
+        // Initialize Swiper after content is added
+        var swiper = new Swiper('.mySwiper', {
+            loop: true,    
+            autoplay: {
+                delay: 3000,           
+                disableOnInteraction: false,  
+            },
+            speed: 1000,            
+            effect: 'slide',      
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,     
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+    })
+    .catch(error => {
+        console.error('Error fetching banner data:', error);
+    });
+</script>
+
+
+<script>
+  var swiper = new Swiper('.mySwiper', {
+    loop: true,    
+              
+    autoplay: {
+      delay: 3000,           
+      disableOnInteraction: false,  
+    },
+    speed: 1000,            
+    effect: 'slide',      
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,     
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+  });
+</script>

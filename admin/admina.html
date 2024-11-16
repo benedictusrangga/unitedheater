@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Banner Management</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <title>United Heater</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
+    
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/swiper-bundle.min.js"></script>
+    <script src="/js/custom.js"></script>
+  <script src="/js/script.js"></script>
+    
+
+
+    <script>
+       document.addEventListener('DOMContentLoaded', function() {
+    const token = localStorage.getItem('sessionToken');
+    console.log('Token ditemukan: ', token);
+
+    if (!token) {
+        window.location.href = 'admin-login.html'; 
+    } else {
+        loadBanners(); 
+    }
+});
+
+  
+        function logout() {
+            localStorage.removeItem('sessionToken'); 
+            window.location.href = 'admin-login.html';
+        }
+    </script>
+</head>
+<body>
+
+    
+
+  <div id="navbar-container"></div>
+  <script>
+fetch('../views/templates/navbar.html') 
+.then(response => response.text()) 
+.then(data => document.getElementById('navbar-container').innerHTML = data); 
+</script>
+
+
+
+<div class="container mt-4">
+    <h2>Banner Management</h2>
+    <button class="btn btn-danger" onclick="logout()">Logout</button>
+
+    <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#bannerModal" onclick="resetForm()">Add New Banner</button>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="bannerTableBody">
+            <!-- Banner items will be loaded here -->
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal for Add/Edit Banner -->
+<div class="modal fade" id="bannerModal" tabindex="-1" role="dialog" aria-labelledby="bannerModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bannerModalLabel">Add New Banner</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="bannerForm" enctype="multipart/form-data">
+                    <input type="hidden" id="editBannerId">
+                    <div class="form-group">
+                        <label for="bannerTitle">Title</label>
+                        <input type="text" class="form-control" id="bannerTitle" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bannerDescription">Description</label>
+                        <input type="text" class="form-control" id="bannerDescription" name="description" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bannerImage">Image</label>
+                        <input type="file" class="form-control-file" id="bannerImage" name="bannerImage">
+                        <img id="previewImage" src="" alt="" width="100" class="mt-2 d-none">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Banner</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    // Load banners from backend
+    function loadBanners() {
+        fetch('http://localhost:3000/banners')
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.getElementById('bannerTableBody');
+                tableBody.innerHTML = ''; // Clear previous rows
+
+                data.forEach(banner => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td><img src="http://localhost:8080${banner.image}" alt="${banner.title}" width="100"></td>
+                        <td>${banner.title}</td>
+                        <td>${banner.description}</td>
+                        <td>
+                            <button class="btn btn-warning" onclick="editBanner(${banner.id})">Edit</button>
+                            <button class="btn btn-danger" onclick="deleteBanner(${banner.id})">Delete</button>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error fetching banners:', error));
+    }
+
+    // Show banner details in modal for editing
+    function editBanner(id) {
+        fetch(`http://localhost:3000/banners/${id}`)
+            .then(response => response.json())
+            .then(banner => {
+                document.getElementById('editBannerId').value = banner.id;
+                document.getElementById('bannerTitle').value = banner.title;
+                document.getElementById('bannerDescription').value = banner.description;
+                document.getElementById('previewImage').src = `http://localhost:8080${banner.image}`;
+                document.getElementById('previewImage').classList.remove('d-none');
+                $('#bannerModal').modal('show');
+            })
+            .catch(error => {
+                console.error('Error fetching banner data:', error);
+                alert('Error fetching banner data');
+            });
+    }
+
+    // Delete a banner
+    function deleteBanner(id) {
+        fetch(`http://localhost:3000/admin/delete-banner/${id}`, { method: 'DELETE' })
+            .then(response => response.json())
+            .then(data => {
+                loadBanners(); // Refresh the banner list
+                alert(data.message); // Show success message
+            })
+            .catch(error => alert('Error deleting banner'));
+    }
+
+    // Reset form for new banner
+    function resetForm() {
+        document.getElementById('bannerForm').reset();
+        document.getElementById('editBannerId').value = '';
+        document.getElementById('previewImage').classList.add('d-none');
+    }
+
+    // Form submission for adding or editing banner
+    document.getElementById('bannerForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+        const bannerId = document.getElementById('editBannerId').value;
+        const method = bannerId ? 'PUT' : 'POST';
+        const url = bannerId ? `http://localhost:3000/admin/edit-banner/${bannerId}` : 'http://localhost:3000/admin/upload-banner';
+
+        fetch(url, {
+            method: method,
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            $('#bannerModal').modal('hide');
+            loadBanners(); // Refresh the banner list
+        })
+        .catch(error => alert('Error saving banner'));
+    });
+
+    // Load banners when the page is loaded
+    document.addEventListener('DOMContentLoaded', loadBanners);
+</script>
+
+
+
+<div class="container mt-4">
+    <h2>Best Selling Products Management</h2>
+
+    <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#productModal" onclick="resetForm()">Add New Product</button>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Link</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="productTableBody">
+            <!-- Best Selling Product items will be loaded here -->
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal for Add/Edit Product -->
+<div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productModalLabel">Add New Product</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="productForm" enctype="multipart/form-data">
+                    <input type="hidden" id="editProductId">
+                    <div class="form-group">
+                        <label for="productName">Product Name</label>
+                        <input type="text" class="form-control" id="productName" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productLink">Link</label>
+                        <input type="text" class="form-control" id="productLink" name="link" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productImage">Image</label>
+                        <input type="file" class="form-control-file" id="productImage" name="productImage">
+                        <img id="previewImage" src="" alt="" width="100" class="mt-2 d-none">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Product</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    
+    function loadBestSellingProducts() {
+        fetch('http://localhost:3000/best-selling-products')
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.getElementById('productTableBody');
+                tableBody.innerHTML = ''; // Clear previous rows
+
+                data.forEach(product => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td><img src="http://localhost:8080${product.image_url}" alt="${product.name}" width="100"></td>
+                        <td>${product.name}</td>
+                        <td><a href="${product.link}" target="_blank">${product.link}</a></td>
+                        <td>
+                            <button class="btn btn-warning" onclick="editProduct(${product.id})">Edit</button>
+                            <button class="btn btn-danger" onclick="deleteProduct(${product.id})">Delete</button>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error fetching products:', error));
+    }
+
+    // Show product details in modal for editing
+    function editProduct(id) {
+        fetch(`http://localhost:3000/best-selling-products/${id}`)
+            .then(response => response.json())
+            .then(product => {
+                document.getElementById('editProductId').value = product.id;
+                document.getElementById('productName').value = product.name;
+                document.getElementById('productLink').value = product.link;
+                document.getElementById('previewImage').src = `http://localhost:3000/${product.image_url}`;
+                document.getElementById('previewImage').classList.remove('d-none');
+                $('#productModal').modal('show');
+            })
+            .catch(error => {
+                console.error('Error fetching product data:', error);
+                alert('Error fetching product data');
+            });
+    }
+
+    // Delete a product
+    function deleteProduct(id) {
+        fetch(`http://localhost:3000/admin/delete-product/${id}`, { method: 'DELETE' })
+            .then(response => response.json())
+            .then(data => {
+                loadBestSellingProducts(); // Refresh the product list
+                alert(data.message); // Show success message
+            })
+            .catch(error => alert('Error deleting product'));
+    }
+
+    // Reset form for new product
+    function resetForm() {
+        document.getElementById('productForm').reset();
+        document.getElementById('editProductId').value = '';
+        document.getElementById('previewImage').classList.add('d-none');
+    }
+
+    // Form submission for adding or editing product
+    document.getElementById('productForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+        const productId = document.getElementById('editProductId').value;
+        const method = productId ? 'PUT' : 'POST';
+        const url = productId ? `http://localhost:3000/admin/edit-product/${productId}` : 'http://localhost:3000/admin/upload-product';
+
+        fetch(url, {
+            method: method,
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            $('#productModal').modal('hide');
+            loadBestSellingProducts(); // Refresh the product list
+        })
+        .catch(error => alert('Error saving product'));
+    });
+
+    // Load best selling products when the page is loaded
+    document.addEventListener('DOMContentLoaded', loadBestSellingProducts);
+</script>
+
+
+</body>
+</html>

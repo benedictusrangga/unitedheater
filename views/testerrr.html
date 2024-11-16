@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Categories</title>
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <style>
+        /* CSS Styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .product-banner {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .product-banner h3 {
+            color: #ff0000;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .swiper-container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .product-item {
+            text-align: center;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .product-item img {
+            width: 100%;
+            max-width: 150px;
+            margin-bottom: 10px;
+        }
+
+        .product-item h4 {
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .product-item p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .swiper-pagination {
+            bottom: 10px;
+        }
+
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: #ff0000;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="product-banner">
+        <h3>Browse Our Product Categories</h3>
+        <div class="swiper-container" id="productCategoriesSlider">
+            <div class="swiper-wrapper">
+                <!-- Product 1 -->
+                <div class="swiper-slide product-item">
+                    <a href="/electric-heaters-elements.html">
+                        <img src="/images\client\image.png" alt="Electric Heaters and Elements">
+                        <h4>Electric Heaters and Elements</h4>
+                        <p>Custom manufactured electric heaters and elements for various heating applications.</p>
+                    </a>
+                </div>
+                <!-- Product 2 -->
+                <div class="swiper-slide product-item">
+                    <a href="/temperature-control.html">
+                        <img src="/images\client\image.png" alt="Temperature Control">
+                        <h4>Temperature Control</h4>
+                        <p>Controllers, SCR Power Controllers, Thermostats & Relays for power and temperature control.</p>
+                    </a>
+                </div>
+                <!-- Product 3 -->
+                <div class="swiper-slide product-item">
+                    <a href="/temperature-sensors.html">
+                        <img src="/images\client\image.png" alt="Temperature Sensors">
+                        <h4>Temperature Sensors</h4>
+                        <p>A variety of thermocouples, RTDs, and thermistors for temperature measurement.</p>
+                    </a>
+                </div>
+                <div class="swiper-slide product-item">
+                  <a href="/temperature-sensors.html">
+                      <img src="/images\client\image.png" alt="Temperature Sensors">
+                      <h4>Temperature Sensors</h4>
+                      <p>A variety of thermocouples, RTDs, and thermistors for temperature measurement.</p>
+                  </a>
+              </div>
+                <!-- Add more products as needed -->
+            </div>
+            <!-- Optional pagination and navigation -->
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+    </div>
+
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        // Initialize Swiper
+        const swiper = new Swiper('#productCategoriesSlider', {
+            loop: true,
+            slidesPerView: 3,
+            spaceBetween: 20,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 1,
+                    spaceBetween: 10,
+                },
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 15,
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 20,
+                },
+            },
+        });
+    </script>
+</body>
+</html>

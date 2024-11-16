@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>United Heater</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="/js/custom.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Poppins:ital,wght@0,200;0,400;0,500;0,600;0,700;1,700&family=Ubuntu:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="https://unitedheater.co.id/sites/default/files/new_logo.png"
+    />
+    <link rel="stylesheet" href="css/swiper-bundle.min.css" />
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+    <link rel="icon" href="https://unitedheater.co.id/sites/default/files/new_logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+ 
+   
+    <style>
+        .bannerfull {
+            background-image: url('/images/product/pabrik.JPG'); /* Gambar latar belakang */
+            background-size: cover; /* Membuat gambar menutupi seluruh elemen */
+            background-position: center center; /* Memusatkan gambar di dalam elemen */
+            background-repeat: no-repeat; /* Menghindari pengulangan gambar */
+            height: 100vh; /* Tinggi banner, bisa disesuaikan sesuai kebutuhan */
+            width: 100%; /* Lebar penuh sesuai dengan lebar elemen induk */
+            position: relative; /* Membantu untuk penempatan elemen anak (seperti teks) */
+        }
+    
+        /* Jika ingin menambahkan overlay agar teks lebih mudah dibaca */
+        .bannerfull::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4); /* Overlay gelap dengan transparansi */
+            z-index: 1; /* Pastikan overlay berada di atas gambar */
+        }
+    
+        /* Menambahkan teks atau elemen di atas banner */
+        .bannerfull .banner-content {
+            position: absolute;
+            top: 50%; /* Posisi di tengah vertikal */
+            left: 50%; /* Posisi di tengah horizontal */
+            transform: translate(-50%, -50%); /* Menyempurnakan pemposisian */
+            color: white; /* Teks putih agar kontras dengan overlay gelap */
+            text-align: center; /* Teks berada di tengah */
+            z-index: 2; /* Pastikan teks di atas overlay */
+        }
+    
+        .bannerfull .banner-content h1 {
+            margin-top:-30% ;
+            font-size: 33px; /* Ukuran font untuk judul */
+            font-weight: bold;
+        }
+    
+        .bannerfull .banner-content p {
+            font-size: 18px; /* Ukuran font untuk deskripsi */
+            font-weight: normal;
+            color: white;
+        }
+    
+        /* Menambahkan background hitam dengan opacity pada .product-banner */
+        .product-banner {
+        overflow-y: hidden;
+            background-color: rgba(0, 0, 0, 0.5); /* Hitam dengan opacity */
+           
+            text-align: center;
+            position: absolute; /* Agar berada di dalam bannerfull */
+            bottom: 0; /* Posisi di bawah */
+            left: 0; /* Posisi di kiri */
+            width: 96%; /* Lebar penuh sesuai dengan elemen induk */
+            z-index: 2; /* Menempatkan di atas overlay */
+        }
+    
+        .product-banner h3 {
+            color: #ff0000;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+    
+        .swiper-container {
+            max-width: 100%;
+            overflow: hidden;
+            margin: auto;
+        }
+    
+        .swiper-slide.product-item {
+            text-align: center;
+            border-radius: 5px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+    
+        .product-item img {
+            width: 100%;
+            max-width: 150px;
+            margin-bottom: 10px;
+        }
+    
+        .product-item h4 {
+            color: white;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+    
+        .product-item p {
+            font-size: 14px;
+            color: white;
+        }
+    
+        .swiper-pagination {
+            bottom: 10px;
+        }
+        
+    
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: white;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-weight: 900;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+        }
+    
+        .swiper-button-next {
+            right: 10px;
+        }
+    
+        .swiper-button-prev {
+            left: 10px;
+        }
+    
+        /* Hover effect for next/prev buttons */
+        .swiper-button-next:hover,
+        .swiper-button-prev:hover {
+            background-color: #ff0000;
+            color: #ffffff;
+        }
+    </style>
+    
+    <body>
+        <div id="navbar-container"></div>
+    
+        <script>
+            fetch('templates/navbar.html')
+                .then(response => response.text())
+                .then(data => document.getElementById('navbar-container').innerHTML = data);
+        </script>
+    
+        <div class="bannerfull">
+            <div class="banner-content">
+                <h1>Welcome to Our Product Showcase</h1>
+                <p>Explore our high-quality industrial heating solutions and temperature control products.</p>
+            </div>
+    
+            <!-- Product Banner Section -->
+            <div class="product-banner">
+            <h1 style="color: white;">Produk Kami</h1>
+            
+                <div class="swiper-container" id="productCategoriesSlider">
+                    <div class="swiper-wrapper">
+                        <!-- Product 1 -->
+                        <div class="swiper-slide product-item">
+                            <img src="/images/product/Band_Heater__7_-removebg-preview.png" alt="Electric Heaters and Elements">
+                            <h4>Electric Heaters and Elements</h4>
+                            <p>Custom manufactured electric heaters and elements for various heating applications.</p>
+                        </div>
+                        <!-- Product 2 -->
+                        <div class="swiper-slide product-item">
+                            <img src="/images/product/Cartridge_Finned_Heater-removebg-preview.png" alt="Temperature Control">
+                            <h4>Temperature Control</h4>
+                            <p>Controllers, SCR Power Controllers, Thermostats & Relays for power and temperature control.</p>
+                        </div>
+                        <!-- Product 3 -->
+                        <div class="swiper-slide product-item">
+                            <img src="/images/product/Cast_In_Kuningan__5_-removebg-preview.png" alt="Temperature Sensors">
+                            <h4>Temperature Sensors</h4>
+                            <p>A variety of thermocouples, RTDs, and thermistors for temperature measurement.</p>
+                        </div>
+                        <!-- Product 4 -->
+                        <div class="swiper-slide product-item">
+                            <img src="/images/product/Cast_In_Kuningan__5_-removebg-preview.png" alt="More Sensors">
+                            <h4>More Sensors</h4>
+                            <p>Additional types of sensors for industrial applications.</p>
+                        </div>
+                         <div class="swiper-slide product-item">
+                            <img src="/images/product/Cast_In_Kuningan__5_-removebg-preview.png" alt="More Sensors">
+                            <h4>More Sensors</h4>
+                            <p>Additional types of sensors for industrial applications.</p>
+                        </div>
+                         <div class="swiper-slide product-item">
+                            <img src="/images/product/Cast_In_Kuningan__5_-removebg-preview.png" alt="More Sensors">
+                            <h4>More Sensors</h4>
+                            <p>Additional types of sensors for industrial applications.</p>
+                        </div>
+                         <div class="swiper-slide product-item">
+                            <img src="/images/product/Cast_In_Kuningan__5_-removebg-preview.png" alt="More Sensors">
+                            <h4>More Sensors</h4>
+                            <p>Additional types of sensors for industrial applications.</p>
+                        </div>
+                    </div>
+                    <!-- Optional pagination and navigation -->
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Swiper JS -->
+        <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+        <script>
+            const swiper = new Swiper('#productCategoriesSlider', {
+                loop: true,
+                slidesPerView: 3,
+                spaceBetween: 0,
+                autoplay: {
+                    delay: 3000,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                breakpoints: {
+                    640: {
+                        slidesPerView: 1,
+                        spaceBetween: 0,
+                    },
+                    768: {
+                        slidesPerView: 2,
+                        spaceBetween: 0,
+                    },
+                    1024: {
+                        slidesPerView: 3,
+                        spaceBetween: 0,
+                    },
+                },
+           
+                pagination: {
+                  el: '.swiper-pagination',
+                         clickable: true,
+                 dynamicBullets: true, // Membatasi jumlah pagination yang ditampilkan
+},
+            });
+
+            
+        </script>
+    </body>
+    
+       
+
+        <div class="container"  id="container">
+          <aside class="sidebar">
+              <h2>Kategori</h2>
+              <ul id="category-list">
+                  <!-- Kategori akan dimuat secara dinamis -->
+              </ul>
+          </aside>
+      
+          <main class="product-list">
+              <div class="category-description">
+                  <h3>Deskripsi Kategori: <span id="category-name">Heater</span></h3>
+                  <p id="category-description">Deskripsi kategori akan tampil di sini.</p>
+              </div>
+      
+              <!-- Produk akan dimuat secara dinamis -->
+              <div id="product-list"></div>
+          </main>
+      </div>
+<script>// Fungsi untuk mengambil kategori dari database
+  fetch('http://localhost:3000/barang')  // Pastikan endpoint '/barang' sudah diatur
+      .then(response => response.json())
+      .then(products => {
+          // Mendapatkan daftar kategori unik
+          const categories = [...new Set(products.map(product => product.kategori))];
+          
+          // Menambahkan kategori ke sidebar
+          const categoryList = document.getElementById('category-list');
+          categories.forEach(category => {
+              const li = document.createElement('li');
+              li.innerHTML = `<button class="category-button" onclick="filterCategory('${category}'); scrollToTop();"> ${category}</button>`;
+
+
+
+              categoryList.appendChild(li);
+          });
+  
+     
+          filterCategory(categories[0]); 
+      })
+      .catch(error => console.error('Error fetching products:', error));
+  
+  // Fungsi untuk filter produk berdasarkan kategori
+  function filterCategory(category) {
+      // Update deskripsi kategori
+      const categoryName = document.getElementById('category-name');
+      const categoryDescription = document.getElementById('category-description');
+      
+    
+      categoryName.textContent = category;
+      categoryDescription.textContent = `Deskripsi  ${category} akan tampil di sini.`;
+  
+      fetch('http://localhost:3000/barang')
+    .then(response => response.json())
+    .then(products => {
+        const filteredProducts = products.filter(product => product.kategori === category);
+
+        // Menampilkan produk yang difilter
+        const productList = document.getElementById('product-list');
+        productList.innerHTML = '';  // Hapus produk yang sebelumnya ditampilkan
+        
+        filteredProducts.forEach(product => {
+            const productDiv = document.createElement('div');
+            productDiv.classList.add('product');
+            productDiv.setAttribute('data-category', product.kategori);
+
+            // Membuat elemen gambar
+            const img = document.createElement('img');
+            img.src = product.gambar;
+            img.alt = product.tipe;
+
+            // Membuat elemen h3 untuk nama produk
+            const h3 = document.createElement('h3');
+            h3.textContent = product.tipe;
+
+            // Membuat elemen p untuk deskripsi produk
+            const description = document.createElement('p');
+            description.textContent = product.deskripsi || "Deskripsi tidak tersedia"; // Menampilkan deskripsi dari database
+
+         
+            // Membuat tombol beli
+            const button = document.createElement('button');
+            button.textContent = 'Beli Sekarang';
+            button.addEventListener('click', function() {
+    window.location.href = '/pemesanan/mail.html'; // Redirect ke halaman pemesanan
+});
+
+            // Menambahkan elemen-elemen ke dalam div produk
+            productDiv.appendChild(img);
+            productDiv.appendChild(h3);
+            productDiv.appendChild(description);
+          
+            productDiv.appendChild(button);
+
+            // Menambahkan div produk ke dalam container
+            productList.appendChild(productDiv);
+        });
+    })
+    .catch(error => console.error('Error filtering products:', error));
+}
+
+
+
+
+function scrollToTop() {
+    const container = document.getElementById('container');
+    
+    // Scroll to the top of the container, considering any offsets.
+    window.scrollTo({
+        top: container.getBoundingClientRect().top + window.pageYOffset - 100,  // Account for offset
+        behavior: 'smooth'
+    });
+}
+
+
+
+  </script>      
+
+    <!-- WhatsApp Floating Icon -->
+<a href=https://api.whatsapp.com/send?phone=628176565099&text=" class="whatsapp_float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  
+  
+  <a href="https://www.instagram.com/unitedheater/" class="instagram_float" target="_blank">
+    <i class="fab fa-instagram"></i>
+  </a>
+ <div id="footer-container"></div>
+  
+
+</body>
+</html>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+
+.imageheader{
+width:100%; 
+height: 100vh;
+}
+.container {
+    display: flex;
+    padding: 20px;
+}
+
+.sidebar {
+    width: 200px;
+    background-color: #ffffff;
+    padding: 15px;
+    margin-right: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 100px;
+    height: calc(100vh - 40px);
+    overflow-y: auto;
+    
+    
+}
+
+
+.sidebar h2 {
+    margin-top: 0;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 10px 0;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    padding: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.sidebar ul li.active a {
+    background-color: #ce181e;
+    color: white;
+}
+
+.product-list {
+    flex-grow: 1;
+    display: grid;
+   
+    gap: 20px;
+}
+
+.category-description {
+    grid-column: span 3; 
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 20px; /* Jarak antara deskripsi dan produk */
+}
+
+.product {
+    background-color: darkgray;
+    border: 3px solid #ce181e;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.product img {
+    max-width: 100%;
+    height: auto;
+}
+
+.price {
+    font-size: 1.5em;
+    color: #ce181e;
+}
+
+button {
+    background-color: #ce181e;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+
+
+.category-button {
+    background-color: transparent;
+    border: none;
+    color: #333;
+    text-align: left;
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.category-button:hover {
+    background-color: #f0f0f0;
+}
+
+
+
+
+#product-list {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    @media (max-width: 1024px) {
+    #product-list {
+        grid-template-columns: repeat(2, 1fr);  /* 2 columns for medium screens */
+    }
+}
+
+/* For small screens (smartphones) */
+@media (max-width: 600px) {
+    #product-list {
+        grid-template-columns: 1fr;  /* 1 column for small screens */
+    }
+    .product-list{
+        width: 50%;
+    }
+}
+
+
+
+
+
+
+</style>
+
+
+
+</html>

@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>United Heater</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/swiper-bundle.min.js"></script>
+    <script src="/js/custom.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Poppins:ital,wght@0,200;0,400;0,500;0,600;0,700;1,700&family=Ubuntu:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="https://unitedheater.co.id/sites/default/files/new_logo.png"
+    />
+    
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="icon" href="https://unitedheater.co.id/sites/default/files/new_logo.png" type="image/x-icon">
+  <style>
+    
+    
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      padding: 20px;
+    }
+
+   
+    header {
+      background-color: #ce181e;
+      padding: 10px;
+      text-align: center;
+      color: white;
+    }
+
+
+    header h1 {
+      font-size: 36px;
+      margin: 0;
+    }
+
+    header p {
+      font-size: 18px;
+      margin-top: 10px;
+    }
+
+    .sidebar {
+      position: -webkit-sticky;
+      height: 100vh;
+      top: 100px;
+      bottom: 10px;
+
+      position: sticky;
+      width: 200px;
+      padding-right: 20px;
+    }
+    .fixed {
+    position: fixed; 
+    top: 20px; 
+}
+
+    .sidebar h2 {
+      font-size: 20px;
+      color: #333;
+    }
+
+    .sidebar button {
+      display: block;
+      background-color: #ce181e;
+      color: white;
+      padding: 10px 20px;
+      margin-top: 30px;
+      margin-bottom: 30px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      width: 100%;
+    }
+
+    .sidebar button:hover {
+      background-color: #a51414;
+    }
+
+
+
+    .containers {
+      display: flex;
+      max-width: 1200px;
+      width: 100%;
+      background-color: #fff;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 20px auto; /* Centers the containers horizontally */
+    }
+
+    .left-column {
+      background-color: #f9f9f9;
+      width: 70%;
+      padding: 20px;
+    }
+
+    .main-content {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.main-content:hover .overlay {
+    opacity: 1;
+}
+
+
+    .main-image {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+
+    .main-text {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      color: white;
+    }
+
+    .main-text h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    .view-trips {
+      padding: 10px 20px;
+      background-color: white;
+      color: black;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    .sub-images {
+      display: flex;
+      gap: 20px;
+    }
+
+    .sub-image-item {
+      flex: 1;
+    }
+
+    .sub-image-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 10px;
+      background-color: #ddd;
+    }
+
+    .latest-stories {
+      width: 30%;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+
+    .section-title {
+      color: #f5cb00;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+
+    .stories-list {
+      list-style-type: none;
+    }
+
+    .stories-list li {
+      display: flex;
+      margin-bottom: 20px;
+    }
+
+    .story-image {
+      width: 100px;
+      height: 40px;
+      margin-right: 15px;
+    }
+
+    .story-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+ 
+      border-radius: 5px;
+    }
+
+    .story-text span {
+      display: block;
+      font-weight: bold;
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 5px;
+    }
+
+    .story-text a {
+      text-decoration: none;
+      font-size: 1.1rem;
+      color: #333;
+      transition: color 0.3s;
+    }
+
+    .story-text a:hover {
+      color: #007BFF;
+    }
+
+    /* Article Grid */
+    .content {
+      flex-grow: 1;
+    }
+
+    .article-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .article-card {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .article-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .article-image img {
+      width: 100%;
+      height: auto;
+    }
+
+    .article-content {
+      padding: 20px;
+    }
+
+    .article-content h3 {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .article-content p {
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+
+    .article-content .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #ce181e;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .article-content .btn:hover {
+      background-color: #a51414;
+    }
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+  padding-top: 100px;
+  overflow: auto; /* Allow scrolling if content exceeds viewport height */
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; /* Smooth transition */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fff;
+  margin: 2% auto;
+  padding: 30px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 1100px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative; 
+  animation: fadeIn 0.5s ease-in-out; /* Fade-in effect */
+}
+
+/* Modal Fade-In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Close Button */
+.close {
+  color: red;
+  font-size: 38px;
+  font-weight: bold;
+  position: fixed;
+  top: 7px;
+  right: 70px;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  padding: 5px;
+  border-radius: 50%;
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+
+.close:hover,
+.close:focus {
+  color: #f44336;
+  text-decoration: none;
+  cursor: pointer;
+  transform: scale(1.2); /* Hover scale effect */
+}
+
+/* Image inside Modal */
+#modalImage {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  height: auto;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Title inside Modal */
+#modalTitle {
+  top: 20px;
+  font-size: 28px;
+  font-weight: 1000;
+  color: white;
+  text-align: center;
+  text-transform: capitalize;
+
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+  padding-bottom: 10px;
+ 
+  font-family: 'Arial', sans-serif;
+}
+
+/* Paragraph Styles inside Modal */
+#modalContent {
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+  font-size: 16px;
+  line-height: 1.8;
+  color: #444;
+  background:white;
+  text-align: justify;
+  margin-bottom: 20px;
+  font-family: 'Georgia', serif;
+  padding: 10px;
+  overflow-wrap: break-word;
+}
+
+/* Styling for each paragraph */
+#modalContent p {
+  margin-bottom: 20px; /* Spacing between paragraphs */
+  text-indent: 30px; /* Indentation for the first line */
+  font-size: 18px;
+  padding-bottom:20px;
+}
+
+/* Add a smooth scroll to modal content */
+#modalContent {
+  scroll-behavior: smooth;
+}
+
+
+
+/* Add a 'Read More' button or link style */
+#modalContent a {
+  display: inline-block;
+  margin-top: 20px;
+  color: #007bff;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+#modalContent a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+
+#modalContent h2{
+  color: #d90000;
+text-align: center;
+}
+
+
+/* Hover effect on Article Card */
+.article-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); /* Add shadow on hover */
+  transition: all 0.3s ease-in-out;
+}
+
+/* Add subtle animation to article image and title */
+.article-image img {
+  transition: transform 0.3s ease-in-out;
+}
+
+.article-image img:hover {
+  transform: scale(1.05); /* Image zoom effect */
+}
+
+.article-content h3 {
+  transition: color 0.3s ease-in-out;
+}
+
+.article-content h3:hover {
+  color: #f44336; /* Change title color on hover */
+}
+
+/* Responsive design for small screens */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 90%;
+    padding: 10px;
+  }
+
+  #modalImage {
+    width: 100%;
+  }
+}
+
+
+body.modal-open {
+  overflow: hidden; /* Menonaktifkan scroll pada halaman belakang modal */
+}
+
+@media (max-width: 768px) {
+  .article-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 20px;
+}
+.header{
+  padding: 0px;
+}
+
+header h1 {
+  font-size: 26px;
+ 
+}
+
+.sidebar {
+    position: -webkit-sticky;
+    height: 100vh;
+    top: 100px;
+    bottom: 10px;
+    position: sticky;
+    width: 96px;
+  
+}
+.article-content p {
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+
+.article-content h3 {
+    font-size: 15px;
+    margin-bottom: 8px;
+}
+
+
+
+.sidebar button {
+    display: block;
+    background-color: #ce181e;
+    color: white;
+    padding: 10px 20px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 87%;
+}
+
+.sidebar h2 {
+    font-size: 15px;
+
+}
+.latest-stories{
+  display:none;
+}
+.left-column{
+  width: 100%;
+}
+
+
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+ <div id="navbar-container"></div>
+  <script>
+    fetch('templates/navbar.html') 
+        .then(response => response.text()) 
+        .then(data => document.getElementById('navbar-container').innerHTML = data); 
+  </script>
+    
+
+  
+
+
+<header style="margin:60px;">
+<h1>Artikel Terbaru</h1>
+<p>Tetap terinformasi dengan wawasan, tips, dan berita terbaru dari kami</p>
+</header>
+
+<div class="containers">
+  <div class="left-column">
+      <div class="main-content">
+        <div class="overlay">
+          <h2>Judul Artikel</h2>
+          <p>Deskripsi singkat artikel.</p>
+      </div>
+          <img src="https://unitedheater.co.id/sites/default/files/styles/list_article/public/field/image/wallpaper_website_1_4.png?itok=rVXHj6W_" alt="Legendary Place" class="main-image">
+          <div class="main-text">
+             
+            
+          </div>
+      </div>
+      <div class="sub-images">
+          <div class="sub-image-item">
+            
+            
+              <img src="https://unitedheater.co.id/sites/default/files/styles/list_article/public/field/image/wallpaper_website_1_4.png?itok=rVXHj6W_" alt="Sub Image 1">
+          </div>
+          <div class="sub-image-item">
+              <img src="https://unitedheater.co.id/sites/default/files/styles/list_article/public/field/image/wallpaper_website_1_4.png?itok=rVXHj6W_" alt="Sub Image 2">
+          </div>
+      </div>
+  </div>
+  <div class="latest-stories">
+      <h2 class="section-title">Cerita Terbaru</h2>
+      <ul class="stories-list">
+          <li>
+              <div class="story-image">
+                  <img src="https://unitedheater.co.id/sites/default/files/styles/list_article/public/field/image/wallpaper_website_1_4.png?itok=rVXHj6W_" alt="Art Event">
+              </div>
+              <div class="story-text">
+                  <span>Sejarah</span>
+                  <a href="#">7 heater terbaik</a>
+              </div>
+          </li>
+          <!-- Other story items can go here -->
+      </ul>
+  </div>
+</div>
+
+
+  <!-- Main Container -->
+<div class="container" id="container">
+  <!-- Sidebar for categories -->
+  <aside class="sidebar">
+      <h2>Kategori</h2>
+      <!-- Categories will be dynamically added here -->
+  </aside>
+
+  <!-- Article Grid -->
+  <div class="content">
+      <div class="article-grid" id="articleGrid">
+          <!-- Articles will be dynamically added here -->
+      </div>
+  </div>
+</div>
+
+
+
+  <div id="articleModal" class="modal">
+    <span class="close">&times;</span>
+    <img id="modalImage" src="" alt="Article Image">
+    <h3 id="modalTitle"></h3>
+    <p id="modalContent"></p>
+</div>
+
+
+
+  <!-- WhatsApp Floating Icon -->
+<a href=https://api.whatsapp.com/send?phone=628176565099&text=" class="whatsapp_float" target="_blank">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+
+<a href="https://www.instagram.com/unitedheater/" class="instagram_float" target="_blank">
+  <i class="fab fa-instagram"></i>
+</a>
+
+
+<div id="footer-container"></div>
+<script>
+  fetch('templates/footer.html')
+      .then(response => response.text())
+      .then(data => document.getElementById('footer-container').innerHTML = data);
+</script>
+
+
+  <script>
+   
+   function scrollToTop() {
+            const container = document.getElementById('container');
+            const offset = 80; 
+    const topPos = container.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top: topPos, behavior: 'smooth' });
+        }
+
+
+ // Function to fetch and render articles from the backend
+async function fetchArticles() {
+    try {
+      const response = await fetch('http://localhost:3000/artikel');
+        const articles = await response.json();
+        renderArticles(articles); // Render articles in the UI
+        renderCategories(articles); // Render categories dynamically
+    } catch (error) {
+        console.error('Error fetching articles:', error);
+    }
+}
+
+// Render articles in the grid
+function renderArticles(articles) {
+    const articleGrid = document.getElementById('articleGrid');
+    articleGrid.innerHTML = ''; // Clear current content
+
+    articles.forEach(article => {
+        const articleCard = document.createElement('div');
+        articleCard.classList.add('article-card');
+        articleCard.setAttribute('data-category', article.kategori);
+
+        articleCard.innerHTML = `
+            <div class="article-image">
+                <img src="${article.gambar}" alt="${article.judul}">
+            </div>
+            <div class="article-content">
+                <h3>${article.judul}</h3>
+                <p>${article.ringkasan}</p>
+                <a href="#" class="btn" onclick="openModal(this.closest('.article-card'))">Baca Selengkapnya</a>
+                <div class="full-article" style="display:none;">
+                 
+                    <p>${article.konten}</p>
+                </div>
+            </div>
+        `;
+        
+        articleGrid.appendChild(articleCard);
+    });
+}
+
+// Render categories in the sidebar dynamically
+function renderCategories(articles) {
+    const categories = [...new Set(articles.map(article => article.kategori))]; // Get unique categories
+    const sidebar = document.querySelector('.sidebar');
+    sidebar.innerHTML = '<h2>Categories</h2><button onclick="filterArticles(\'all\'); scrollToTop();">All</button>';
+
+    categories.forEach(category => {
+        const button = document.createElement('button');
+        button.innerText = category;
+        button.onclick = () => { filterArticles(category); scrollToTop(); };
+        sidebar.appendChild(button);
+    });
+}
+
+// Function to filter articles by category
+function filterArticles(category) {
+    const articles = document.querySelectorAll('.article-card');
+    articles.forEach(article => {
+        if (category === 'all' || article.getAttribute('data-category') === category) {
+            article.style.display = 'block';
+        } else {
+            article.style.display = 'none';
+        }
+    });
+}
+// Function to open modal with article content
+function openModal(card) {
+    const modal = document.getElementById("articleModal");
+    const modalImg = document.getElementById("modalImage");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalContent = document.getElementById("modalContent");
+
+    // Get article details from the card
+    const articleImage = card.querySelector('.article-image img').src;
+    const articleTitle = card.querySelector('.article-content h3').textContent;
+    const articleContent = card.querySelector('.full-article').innerHTML;  // Using innerHTML to get all HTML content
+
+    // Set the modal content
+    modalImg.src = articleImage;
+    modalTitle.textContent = articleTitle;
+    modalContent.innerHTML = articleContent;  // Inject HTML content into the modal
+
+    // Display the modal
+    modal.style.display = "block";
+    document.body.classList.add('modal-open');
+}
+
+
+// Close modal on click of close button
+const closeModal = document.getElementsByClassName("close")[0];
+closeModal.onclick = function() {
+    const modal = document.getElementById("articleModal");
+    modal.style.display = "none";
+    document.body.classList.remove('modal-open');
+}
+
+// Close modal when clicking outside of modal content
+window.onclick = function(event) {
+    const modal = document.getElementById("articleModal");
+    if (event.target == modal) {
+        modal.style.display = "none";
+        document.body.classList.remove('modal-open');
+    }
+    
+}
+
+
+fetchArticles();
+
+
+    
+  </script>
+</body>
+</html>
